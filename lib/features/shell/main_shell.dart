@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:milbeki_app/features/dashboard/data/mock_dashboard_data.dart';
+import 'package:milbeki_app/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:milbeki_app/features/shell/add_menu_sheet.dart';
 import 'package:milbeki_app/features/shell/placeholder_page.dart';
 
@@ -17,22 +19,19 @@ class _MainShellState extends State<MainShell> {
   int _selectedIndex = 0;
 
   // One page per destination. Index 2 is an empty box that is never shown.
-  // The placeholders are replaced by real screens in the next steps.
-  final List<Widget> _pages = const [
-    PlaceholderPage(
-      icon: Icons.home_outlined,
-      message: 'Your dashboard will appear here.',
-    ),
-    PlaceholderPage(
+  // Home uses sample data for now; the server replaces it in a later phase.
+  final List<Widget> _pages = [
+    DashboardScreen(data: MockDashboardData.sample()),
+    const PlaceholderPage(
       icon: Icons.calendar_month_outlined,
       message: 'Your financial calendar will appear here.',
     ),
-    SizedBox.shrink(),
-    PlaceholderPage(
+    const SizedBox.shrink(),
+    const PlaceholderPage(
       icon: Icons.swap_horiz,
       message: 'Money you owe and are owed will appear here.',
     ),
-    PlaceholderPage(
+    const PlaceholderPage(
       icon: Icons.menu,
       message: 'Analytics, accounts and settings will appear here.',
     ),

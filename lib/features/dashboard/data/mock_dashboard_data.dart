@@ -1,6 +1,8 @@
 import 'package:milbeki_app/core/utils/budget_cycle.dart';
 import 'package:milbeki_app/core/utils/money.dart';
 import 'package:milbeki_app/features/dashboard/domain/dashboard_models.dart';
+import 'package:milbeki_app/features/money_owed/data/mock_debt_data.dart';
+import 'package:milbeki_app/features/money_owed/domain/debt_rules.dart';
 
 // Fixed sample data, so the dashboard looks the same every time while we
 // build the screens. "Today" is fixed on purpose. The server replaces this later.
@@ -67,22 +69,10 @@ class MockDashboardData {
           kind: DueKind.bill,
         ),
         DueItem(
-          title: 'Rahim will pay you',
-          amount: Money.taka(200),
-          dueDate: DateTime(2026, 10, 15),
-          kind: DueKind.owedToYou,
-        ),
-        DueItem(
           title: 'Internet',
           amount: Money.taka(1000),
           dueDate: DateTime(2026, 10, 20),
           kind: DueKind.bill,
-        ),
-        DueItem(
-          title: 'Repay Fatir',
-          amount: Money.taka(300),
-          dueDate: DateTime(2026, 10, 20),
-          kind: DueKind.debtYouOwe,
         ),
         // Due after the cycle ends on 31 Oct, so it is not reserved yet.
         DueItem(
@@ -91,6 +81,8 @@ class MockDashboardData {
           dueDate: DateTime(2026, 11, 3),
           kind: DueKind.bill,
         ),
+        // Debt rows come from the debt records, so the two screens can't disagree.
+        ...DebtRules.toDueItems(MockDebtData.sample()),
       ],
     );
   }

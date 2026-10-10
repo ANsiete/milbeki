@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:milbeki_app/features/transactions/presentation/add_expense_flow.dart';
 
 // Opens the "what do you want to add?" panel from the bottom of the screen.
 Future<void> showAddMenu(BuildContext context) {
@@ -10,11 +11,16 @@ Future<void> showAddMenu(BuildContext context) {
     context: context,
     showDragHandle: true,
     builder: (sheetContext) {
-      void choose(String label) {
+      void comingLater(String label) {
         Navigator.of(sheetContext).pop(); // close the sheet
         messenger.showSnackBar(
           SnackBar(content: Text('$label is built in a later step.')),
         );
+      }
+
+      void chooseExpense() {
+        Navigator.of(sheetContext).pop(); // close the sheet
+        openAddExpense(context); // then open the form
       }
 
       return SafeArea(
@@ -24,22 +30,22 @@ Future<void> showAddMenu(BuildContext context) {
             _AddOption(
               icon: Icons.north_east,
               label: 'Add Expense',
-              onTap: () => choose('Add Expense'),
+              onTap: chooseExpense,
             ),
             _AddOption(
               icon: Icons.south_west,
               label: 'Add Income',
-              onTap: () => choose('Add Income'),
+              onTap: () => comingLater('Add Income'),
             ),
             _AddOption(
               icon: Icons.swap_horiz,
               label: 'Add Money Owed',
-              onTap: () => choose('Add Money Owed'),
+              onTap: () => comingLater('Add Money Owed'),
             ),
             _AddOption(
               icon: Icons.event_repeat,
               label: 'Add Recurring Expense',
-              onTap: () => choose('Add Recurring Expense'),
+              onTap: () => comingLater('Add Recurring Expense'),
             ),
             const SizedBox(height: 8),
           ],
