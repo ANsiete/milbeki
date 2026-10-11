@@ -72,12 +72,15 @@ void main() {
     expect(find.text('Add Money Owed'), findsOneWidget);
     expect(find.text('Add Recurring Expense'), findsOneWidget);
 
-    await tester.tap(find.text('Add Income'));
+    await tester.tap(find.text('Add Recurring Expense'));
     await tester.pumpAndSettle();
 
     // The sheet is closed, a message appears, and we are still on Home.
     expect(find.text('Add Expense'), findsNothing);
-    expect(find.text('Add Income is built in a later step.'), findsOneWidget);
+    expect(
+      find.text('Add Recurring Expense is built in a later step.'),
+      findsOneWidget,
+    );
     expect(_selectedTab(tester), 0);
     expect(find.text('Safe to spend today').hitTestable(), findsOneWidget);
   });

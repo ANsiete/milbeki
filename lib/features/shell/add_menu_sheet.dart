@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:milbeki_app/features/transactions/presentation/add_expense_flow.dart';
+import 'package:milbeki_app/features/transactions/presentation/add_income_flow.dart';
 
 // Opens the "what do you want to add?" panel from the bottom of the screen.
 // The menu does not know about debts. The shell passes in what to do when
@@ -28,6 +29,11 @@ Future<void> showAddMenu(
         openAddExpense(context); // then open the form
       }
 
+      void chooseIncome() {
+        Navigator.of(sheetContext).pop(); // close the sheet
+        openAddIncome(context); // then open the form
+      }
+
       void chooseDebt() {
         Navigator.of(sheetContext).pop(); // close the sheet
         onAddDebt(); // then let the shell open the form
@@ -45,7 +51,7 @@ Future<void> showAddMenu(
             _AddOption(
               icon: Icons.south_west,
               label: 'Add Income',
-              onTap: () => comingLater('Add Income'),
+              onTap: chooseIncome,
             ),
             _AddOption(
               icon: Icons.swap_horiz,
