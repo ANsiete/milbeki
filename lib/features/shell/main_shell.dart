@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:milbeki_app/features/dashboard/data/mock_dashboard_data.dart';
+import 'package:milbeki_app/features/dashboard/domain/dashboard_models.dart';
 import 'package:milbeki_app/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:milbeki_app/features/money_owed/data/mock_debt_data.dart';
+import 'package:milbeki_app/features/money_owed/presentation/money_owed_screen.dart';
 import 'package:milbeki_app/features/shell/add_menu_sheet.dart';
 import 'package:milbeki_app/features/shell/placeholder_page.dart';
 
@@ -18,18 +21,22 @@ class _MainShellState extends State<MainShell> {
 
   int _selectedIndex = 0;
 
+  // Sample data for now; the server replaces it in a later phase.
+  late final DashboardData _dashboard = MockDashboardData.sample();
+
   // One page per destination. Index 2 is an empty box that is never shown.
-  // Home uses sample data for now; the server replaces it in a later phase.
-  final List<Widget> _pages = [
-    DashboardScreen(data: MockDashboardData.sample()),
+  // Money Owed uses the dashboard's fixed sample date, so the numbers match
+  // our worked example.
+  late final List<Widget> _pages = [
+    DashboardScreen(data: _dashboard),
     const PlaceholderPage(
       icon: Icons.calendar_month_outlined,
       message: 'Your financial calendar will appear here.',
     ),
     const SizedBox.shrink(),
-    const PlaceholderPage(
-      icon: Icons.swap_horiz,
-      message: 'Money you owe and are owed will appear here.',
+    MoneyOwedScreen(
+      initialDebts: MockDebtData.sample(),
+      now: () => _dashboard.now,
     ),
     const PlaceholderPage(
       icon: Icons.menu,

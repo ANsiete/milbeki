@@ -19,10 +19,8 @@ void main() {
 
     await tester.tap(find.text('Money Owed'));
     await tester.pumpAndSettle();
-    expect(
-      find.text('Money you owe and are owed will appear here.'),
-      findsOneWidget,
-    );
+    expect(find.byKey(const Key('youOweCard')), findsOneWidget);
+    expect(find.byKey(const Key('owedToYouCard')), findsOneWidget);
 
     await tester.tap(find.text('More'));
     await tester.pumpAndSettle();
