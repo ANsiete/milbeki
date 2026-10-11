@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:milbeki_app/features/transactions/presentation/add_expense_flow.dart';
 
 // Opens the "what do you want to add?" panel from the bottom of the screen.
-Future<void> showAddMenu(BuildContext context) {
+// The menu does not know about debts. The shell passes in what to do when
+// "Add Money Owed" is chosen.
+Future<void> showAddMenu(
+  BuildContext context, {
+  required VoidCallback onAddDebt,
+}) {
   // Grab the messenger now, while this context is still valid. The sheet closes
   // before we show the message, and a closed sheet's context cannot be used.
   final messenger = ScaffoldMessenger.of(context);
@@ -23,6 +28,11 @@ Future<void> showAddMenu(BuildContext context) {
         openAddExpense(context); // then open the form
       }
 
+      void chooseDebt() {
+        Navigator.of(sheetContext).pop(); // close the sheet
+        onAddDebt(); // then let the shell open the form
+      }
+
       return SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min, // only as tall as its content
@@ -40,7 +50,7 @@ Future<void> showAddMenu(BuildContext context) {
             _AddOption(
               icon: Icons.swap_horiz,
               label: 'Add Money Owed',
-              onTap: () => comingLater('Add Money Owed'),
+              onTap: chooseDebt,
             ),
             _AddOption(
               icon: Icons.event_repeat,

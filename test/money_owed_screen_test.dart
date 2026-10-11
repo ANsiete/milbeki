@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:milbeki_app/core/theme/app_theme.dart';
 import 'package:milbeki_app/features/money_owed/data/mock_debt_data.dart';
+   import 'package:milbeki_app/features/money_owed/application/debt_store.dart';
 import 'package:milbeki_app/features/money_owed/presentation/money_owed_screen.dart';
 
 final _now = DateTime(2026, 10, 10, 15, 30);
@@ -21,7 +22,7 @@ Future<void> _pump(WidgetTester tester) async {
       theme: AppTheme.light(),
       home: Scaffold(
         body: MoneyOwedScreen(
-          initialDebts: MockDebtData.sample(),
+             store: DebtStore(MockDebtData.sample()),
           now: () => _now,
         ),
       ),
