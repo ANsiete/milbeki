@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:milbeki_app/features/calendar/application/calendar_store.dart';
+import 'package:milbeki_app/features/calendar/data/mock_calendar_data.dart';
+import 'package:milbeki_app/features/calendar/presentation/calendar_screen.dart';
 import 'package:milbeki_app/features/dashboard/data/mock_dashboard_data.dart';
 import 'package:milbeki_app/features/dashboard/domain/dashboard_models.dart';
 import 'package:milbeki_app/features/dashboard/presentation/dashboard_screen.dart';
@@ -28,8 +31,14 @@ class _MainShellState extends State<MainShell> {
   // Sample data for now; the server replaces it in a later phase.
   late final DashboardData _baseDashboard = MockDashboardData.sample();
 
-  // The one shared list of debts. Money Owed and Home both read from it.
+  // The one shared list of debts. Money Owed, Home and the Calendar read it.
   late final DebtStore _debtStore = DebtStore(MockDebtData.sample());
+
+  // Bills and expected income, read by the Calendar.
+  late final CalendarStore _calendarStore = CalendarStore(
+    bills: MockCalendarData.bills(),
+    expectedIncome: MockCalendarData.expectedIncome(),
+  );
 
   // One page per destination. Index 2 is an empty box that is never shown.
   late final List<Widget> _pages = [
@@ -38,9 +47,10 @@ class _MainShellState extends State<MainShell> {
       builder: (context, _) =>
           DashboardScreen(data: _dashboardFor(_debtStore.debts)),
     ),
-    const PlaceholderPage(
-      icon: Icons.calendar_month_outlined,
-      message: 'Your financial calendar will appear here.',
+    CalendarScreen(
+      debtStore: _debtStore,
+      calendarStore: _calendarStore,
+      now: () => _baseDashboard.now,
     ),
     const SizedBox.shrink(),
     MoneyOwedScreen(store: _debtStore, now: () => _baseDashboard.now),
@@ -88,6 +98,7 @@ class _MainShellState extends State<MainShell> {
   @override
   void dispose() {
     _debtStore.dispose();
+    _calendarStore.dispose();
     super.dispose();
   }
 

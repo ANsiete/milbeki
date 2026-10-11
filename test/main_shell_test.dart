@@ -38,10 +38,7 @@ void main() {
 
     await _tapNav(tester, 'Calendar');
     expect(_selectedTab(tester), 1);
-    expect(
-      find.text('Your financial calendar will appear here.').hitTestable(),
-      findsOneWidget,
-    );
+    expect(find.text('October 2026').hitTestable(), findsOneWidget);
     expect(find.text('Safe to spend today').hitTestable(), findsNothing);
 
     await _tapNav(tester, 'Money Owed');

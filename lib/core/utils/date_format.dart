@@ -4,6 +4,10 @@ class AppDates {
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
   ];
+  static const _fullMonths = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
+  ];
   static const _weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   /// 15 Oct
@@ -21,4 +25,8 @@ class AppDates {
     final suffix = date.hour < 12 ? 'AM' : 'PM';
     return '$hour:$minute $suffix';
   }
+
+  /// October 2026
+  static String monthYear(DateTime date) =>
+      '${_fullMonths[date.month - 1]} ${date.year}';
 }

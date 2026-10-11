@@ -17,4 +17,10 @@ void main() {
     expect(AppDates.time12h(DateTime(2026, 10, 10, 12, 0)), '12:00 PM');
     expect(AppDates.time12h(DateTime(2026, 10, 10, 15, 30)), '3:30 PM');
   });
+
+  test('monthYear uses the full month name', () {
+    expect(AppDates.monthYear(DateTime(2026, 10, 15)), 'October 2026');
+    expect(AppDates.monthYear(DateTime(2027, 1, 1)), 'January 2027');
+    expect(AppDates.monthYear(DateTime(2026, 5, 31)), 'May 2026');
+  });
 }
